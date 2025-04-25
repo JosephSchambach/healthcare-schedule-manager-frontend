@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
+import Login from './Components/Login'; // Import the login function from Login.js
 
 function App() {
+
   return (
     <div className="App">
       <header className="App-header">
@@ -9,17 +11,11 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Login />
       </header>
     </div>
   );
 }
+
 
 export default App;
