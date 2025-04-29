@@ -18,7 +18,7 @@ export default function Login() {
         console.log(JSON.stringify(data))
         const authorizationHeader = encodeAuthorizationHeader(data.username, data.password, data.role);
         const url = await getContext('url');
-        const response = await fetch(`${url}api/login`, {
+        const response = await fetch(`${url}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', 
