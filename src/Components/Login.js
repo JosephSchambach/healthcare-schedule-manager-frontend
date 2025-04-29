@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { getContext } from "../utils.js";
+
 // import "./App.css"
 
 export default function Login() {
@@ -15,7 +17,8 @@ export default function Login() {
     const onSubmit = async data => {
         console.log(JSON.stringify(data))
         const authorizationHeader = encodeAuthorizationHeader(data.username, data.password, data.role);
-        const response = await fetch('http://127.0.0.1:5000/api/login', {
+        const url = await getContext('url');
+        const response = await fetch(`${url}api/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json', 
@@ -24,6 +27,14 @@ export default function Login() {
             body: JSON.stringify(data)
         })
         const result = await response.json();
+        let string_result = JSON.stringify(result)
+        if (response.statusCode in [200, 201]) {
+            console.log("Login Successful")
+            console.log(string_result)
+        } else {
+            console.log("Login Failed")
+            console.log(string_result)
+        }
         console.log(result)
     }
 
