@@ -1,69 +1,29 @@
-# Getting Started with Create React App
+# Healthcare Schedule Manager Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Full-stack development project that simulates a hospital scheduling management system. It allows hospitals to schedule patients dynamically with specific doctors for specific diagnoses.
 
-## Available Scripts
+I am planning to also build in a predictive element for predicting patient no-shows, cancellations, and busy time-periods to help with future scheduling.
 
-In the project directory, you can run:
+Healthcare Appointment Management System (Full-Stack)
 
-### `npm start`
+Why: Healthcare organizations often face challenges in appointment scheduling, patient management, and cancellations. This project will help you build out the full stack—backend, frontend, API management, and security.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+What I plan to learn:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    Frontend frameworks like React/Angular for user interfaces.
 
-### `npm test`
+    Backend work with Node.js or Django.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    Integrating third-party APIs (e.g., calendar or video conferencing).
 
-### `npm run build`
+    Security best practices for healthcare data (HIPAA-compliance aspects, encryption).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    CI/CD pipelines for automated deployment.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    Docker containers for the project’s microservices.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Stretch goal: Implement machine learning to predict no-shows or optimal appointment times.
+Link to Miro project board: https://miro.com/app/board/uXjVLhpo6Rs=/?moveToWidget=3458764623138792242&cot=14 Link to Miro architecture board: https://miro.com/app/board/uXjVLhpo6Rs=/?moveToWidget=3458764619324992789&cot=14
 
 ### `npm run build` fails to minify
 
