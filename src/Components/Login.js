@@ -1,14 +1,14 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { getContext } from "../utils.js";
-
-// import "./App.css"
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const { register, handleSubmit, formState: { errors }} = useForm();
     let roles = [
         "Admin", "Doctor", "Patient"
     ]
+    const navigate = useNavigate();
 
     const encodeAuthorizationHeader = (username, password, role) => {
         return btoa(`${username}:${password}:${role}`);
@@ -27,13 +27,18 @@ export default function Login() {
             body: JSON.stringify(data)
         })
         const result = await response.json();
+        console.log(result)
         let string_result = JSON.stringify(result)
-        if (response.statusCode in [200, 201]) {
+        let json_object = JSON.parse(string_result)
+        let status_code = json_object.statusCode
+        if (status_code === 200) {
             console.log("Login Successful")
-            console.log(string_result)
+            console.log("Login Successful")
+            let session_token = json_object.sessionToken
+            navigate('/home', {state: { session_token: session_token, role: data.role, username: data.username }})
         } else {
             console.log("Login Failed")
-            console.log(string_result)
+            alert("Login Failed")
         }
         console.log(result)
     }
