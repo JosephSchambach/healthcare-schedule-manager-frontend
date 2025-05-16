@@ -8,14 +8,19 @@ function PatientScheduleForm() {
     const onSubmit = async data => {
         console.log(JSON.stringify(data))
         const url = await getContext('url');
-        const response = await fetch(`${url}/appointment`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        const result = await response.json();
+        try {
+            const response = await fetch(`${url}/appointment`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            const result = await response.json();
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            alert("An error occurred while fetching data. Please try again later.");
+        }
     }
 
     return (

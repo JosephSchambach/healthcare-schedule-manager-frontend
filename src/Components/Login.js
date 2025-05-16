@@ -4,11 +4,11 @@ import { getContext } from "../utils.js";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }} = useForm();
     let roles = [
         "Admin", "Doctor", "Patient"
     ]
-    const navigate = useNavigate();
 
     const encodeAuthorizationHeader = (username, password, role) => {
         return btoa(`${username}:${password}:${role}`);
@@ -18,29 +18,29 @@ export default function Login() {
         console.log(JSON.stringify(data))
         const authorizationHeader = encodeAuthorizationHeader(data.username, data.password, data.role);
         const url = await getContext('url');
-        const response = await fetch(`${url}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json', 
-                'Authorization': `Basic ${authorizationHeader}`
-            },
-            body: JSON.stringify(data)
-        })
-        const result = await response.json();
-        console.log(result)
-        let string_result = JSON.stringify(result)
-        let json_object = JSON.parse(string_result)
-        let status_code = json_object.statusCode
+        let result = {}
+        try {
+            const response = await fetch(`${url}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                    'Authorization': `Basic ${authorizationHeader}`
+                },
+                body: JSON.stringify(data)
+            })
+            result = await response.json();
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            alert("An error occurred while fetching data. Please try again later.");
+        }
+        let status_code = result.statusCode
         if (status_code === 200) {
-            console.log("Login Successful")
-            console.log("Login Successful")
-            let session_token = json_object.sessionToken
+            let session_token = result.sessionToken
             navigate('/home', {state: { session_token: session_token, role: data.role, username: data.username }})
         } else {
             console.log("Login Failed")
             alert("Login Failed")
         }
-        console.log(result)
     }
 
     return (

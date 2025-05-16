@@ -18,6 +18,7 @@ function App() {
         <Route path="/cancel" element={<PatientCancelForm />}/>
         <Route path="/reschedule" element={<PatientRescheduleForm />}/>
         <Route path="/doctor" element={<DoctorView />}/>
+        <Route path="*" element={<h1>404 Page Not Found</h1>}/>
       </Routes>
     </Router>
   );
