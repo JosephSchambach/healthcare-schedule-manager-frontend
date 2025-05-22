@@ -6,21 +6,45 @@ import PatientScheduleForm from './Pages/PatientScheduleForm';
 import PatientCancelForm from './Pages/PatientCancelForm';
 import PatientRescheduleForm from './Pages/PatientRescheduleForm';
 import DoctorView from './Pages/DoctorView';
+import { SessionProvider } from './Components/SessionContext';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />}/>
-        <Route path="/home" element={<HomePage />}/>
-        <Route path="/schedule" element={<PatientScheduleForm />}/>
-        <Route path="/cancel" element={<PatientCancelForm />}/>
-        <Route path="/reschedule" element={<PatientRescheduleForm />}/>
-        <Route path="/doctor" element={<DoctorView />}/>
-        <Route path="*" element={<h1>404 Page Not Found</h1>}/>
-      </Routes>
-    </Router>
+    <SessionProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />}/>
+          <Route path="/home" element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            } />
+            <Route path="/schedule" element={
+              <ProtectedRoute requiredRole="patient">
+                <PatientScheduleForm />
+              </ProtectedRoute>
+            }/>
+            <Route path="/cancel" element={
+              <ProtectedRoute requiredRole="patient">
+                <PatientCancelForm />
+              </ProtectedRoute>
+            }/>
+            <Route path="/reschedule" element={
+              <ProtectedRoute requiredRole="patient">
+                <PatientRescheduleForm />
+              </ProtectedRoute>    
+            }/>
+            <Route path="/doctor" element={
+              <ProtectedRoute requiredRole="doctor">
+                <DoctorView />
+              </ProtectedRoute>  
+            }/>
+            <Route path="*" element={<h1>404 Page Not Found</h1>}/>
+        </Routes>
+      </Router>
+    </SessionProvider>
   );
 }
 

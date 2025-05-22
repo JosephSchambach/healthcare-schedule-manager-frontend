@@ -2,12 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { getContext } from "../utils.js";
 import { useNavigate } from "react-router-dom";
+import { useSession } from "./SessionContext.js";
 
 export default function Login() {
+    const { updateSession } = useSession();
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }} = useForm();
     let roles = [
-        "Admin", "Doctor", "Patient"
+        "admin", "doctor", "patient"
     ]
 
     const encodeAuthorizationHeader = (username, password, role) => {
@@ -35,8 +37,13 @@ export default function Login() {
         }
         let status_code = result.statusCode
         if (status_code === 200) {
-            let session_token = result.sessionToken
-            navigate('/home', {state: { session_token: session_token, role: data.role, username: data.username }})
+            updateSession({
+                sessionToken: result.sessionToken, 
+                role: data.role, 
+                username: data.username,
+                userId: result.userId
+            });
+            navigate('/home');
         } else {
             console.log("Login Failed")
             alert("Login Failed")
