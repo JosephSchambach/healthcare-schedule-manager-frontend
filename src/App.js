@@ -1,19 +1,50 @@
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Login from './Components/Login'; // Import the login function from Login.js
+import Login from './Components/Login'; 
+import HomePage from './Pages/Home';
+import PatientScheduleForm from './Pages/PatientScheduleForm';
+import PatientCancelForm from './Pages/PatientCancelForm';
+import PatientRescheduleForm from './Pages/PatientRescheduleForm';
+import DoctorView from './Pages/DoctorView';
+import { SessionProvider } from './Components/SessionContext';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 function App() {
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Login />
-      </header>
-    </div>
+    <SessionProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />}/>
+          <Route path="/home" element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            } />
+            <Route path="/schedule" element={
+              <ProtectedRoute requiredRole="patient">
+                <PatientScheduleForm />
+              </ProtectedRoute>
+            }/>
+            <Route path="/cancel" element={
+              <ProtectedRoute requiredRole="patient">
+                <PatientCancelForm />
+              </ProtectedRoute>
+            }/>
+            <Route path="/reschedule" element={
+              <ProtectedRoute requiredRole="patient">
+                <PatientRescheduleForm />
+              </ProtectedRoute>    
+            }/>
+            <Route path="/doctor" element={
+              <ProtectedRoute requiredRole="doctor">
+                <DoctorView />
+              </ProtectedRoute>  
+            }/>
+            <Route path="*" element={<h1>404 Page Not Found</h1>}/>
+        </Routes>
+      </Router>
+    </SessionProvider>
   );
 }
 

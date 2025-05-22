@@ -1,13 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { getContext } from "../utils.js";
-
-// import "./App.css"
+import { useNavigate } from "react-router-dom";
+import { useSession } from "./SessionContext.js";
 
 export default function Login() {
+    const { updateSession } = useSession();
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors }} = useForm();
     let roles = [
-        "Admin", "Doctor", "Patient"
+        "admin", "doctor", "patient"
     ]
 
     const encodeAuthorizationHeader = (username, password, role) => {
@@ -18,24 +20,34 @@ export default function Login() {
         console.log(JSON.stringify(data))
         const authorizationHeader = encodeAuthorizationHeader(data.username, data.password, data.role);
         const url = await getContext('url');
-        const response = await fetch(`${url}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json', 
-                'Authorization': `Basic ${authorizationHeader}`
-            },
-            body: JSON.stringify(data)
-        })
-        const result = await response.json();
-        let string_result = JSON.stringify(result)
-        if (response.statusCode in [200, 201]) {
-            console.log("Login Successful")
-            console.log(string_result)
+        let result = {}
+        try {
+            const response = await fetch(`${url}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json', 
+                    'Authorization': `Basic ${authorizationHeader}`
+                },
+                body: JSON.stringify(data)
+            })
+            result = await response.json();
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            alert("An error occurred while fetching data. Please try again later.");
+        }
+        let status_code = result.statusCode
+        if (status_code === 200) {
+            updateSession({
+                sessionToken: result.sessionToken, 
+                role: data.role, 
+                username: data.username,
+                userId: result.userId
+            });
+            navigate('/home');
         } else {
             console.log("Login Failed")
-            console.log(string_result)
+            alert("Login Failed")
         }
-        console.log(result)
     }
 
     return (
