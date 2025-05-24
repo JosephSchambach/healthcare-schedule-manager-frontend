@@ -50,19 +50,26 @@ export default function Login() {
         }
     }
 
+    const handleRegister = () => {
+        navigate('/register');
+    }
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <input {...register('username', { required: true })} />
-            {errors.username && <span>Username Required</span>}
-            <input type='password' {...register('password', { required: true })}/>
-            {errors.password && <span>Password Required</span>}
-            <select {...register('role', { required: true })}>
-                {roles.map((role, index) => (
-                    <option key={index} value={role}>{role}</option>
-                ))}
-            </select>
-            {errors.role && <span>Role Required</span>}
-            <button type='submit'>Login</button>
-        </form>
+        <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <input {...register('username', { required: true })} />
+                {errors.username && <span>Username Required</span>}
+                <input type='password' {...register('password', { required: true })}/>
+                {errors.password && <span>Password Required</span>}
+                <select {...register('role', { required: true })}>
+                    {roles.map((role, index) => (
+                        <option key={index} value={role}>{role}</option>
+                    ))}
+                </select>
+                {errors.role && <span>Role Required</span>}
+                <button type='submit'>Login</button>
+            </form>
+            <button onClick={handleRegister}>Register as New Patient</button>
+        </div>
     )
 }

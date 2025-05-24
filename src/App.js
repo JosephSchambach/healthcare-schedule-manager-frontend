@@ -8,6 +8,7 @@ import PatientRescheduleForm from './Pages/PatientRescheduleForm';
 import DoctorView from './Pages/DoctorView';
 import { SessionProvider } from './Components/SessionContext';
 import ProtectedRoute from './Components/ProtectedRoute';
+import RegisterForm from './Pages/RegisterForm';
 
 function App() {
 
@@ -42,6 +43,12 @@ function App() {
               </ProtectedRoute>  
             }/>
             <Route path="*" element={<h1>404 Page Not Found</h1>}/>
+            <Route path="/register" element={
+              <>
+                <h1>Register Here</h1>
+                <RegisterForm />
+              </>
+            }/>
         </Routes>
       </Router>
     </SessionProvider>
