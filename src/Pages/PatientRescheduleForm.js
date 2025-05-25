@@ -59,9 +59,19 @@ function PatientRescheduleForm() {
                 body: JSON.stringify(data)
             });
             const result = await response.json();
+            let status_code = result.statusCode;
+            if (status_code === 200) {
+                alert("Appointment Scheduled Successfully");
+                console.log(result);
+                navigate('/home');
+            } else {
+                console.log("Appointment Scheduling Failed")
+                console.log(result);
+                alert("Appointment Scheduling Failed")
+            }
         } catch (error) {
-            console.error("Error updating appointment:", error);
-            alert("An error occurred. Try again.");
+            console.error("Error fetching data:", error);
+            alert("An error occurred while fetching data. Please try again later.");
         }
     };
 
