@@ -23,6 +23,7 @@ function RegisterForm() {
             })
             const result = await response.json();
             console.log(result);
+            navigate('/');
         } catch(error) {
             console.error("Error creating user:", error);
             alert("An error occurred while creating user. Please try again later.");
