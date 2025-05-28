@@ -25,12 +25,6 @@ function PatientRescheduleForm() {
         '03:00',
         '04:00'
     ]
-    let appointmentTypes = [
-        {id: 1, name: 'general'}
-    ]
-    let doctors = [
-        {id: 1, name: 'Dr. Smith'}
-    ]
     useEffect(() => {
         async function loadAppointments() {
             const result = await fetchAppointments(session.role, session.userId);
@@ -50,6 +44,7 @@ function PatientRescheduleForm() {
         data.update_data = {
             appointment_date: data.appointment_date,
             appointment_time: data.appointment_time,
+            appointment_status: 'rescheduled'
         }
         const url = await getContext('url');
         try {
@@ -79,35 +74,57 @@ function PatientRescheduleForm() {
 
     return (
         <div>
-            <h2>Your Appointments</h2>
-            {appointments.length === 0 ? (
-                <p>No appointments found.</p>
+            {loading ? (
+                <div>Loading appointments...</div>
             ) : (
-                appointments.map(appt => (
-                    <div key={appt.appointmentId}>
-                        <p>{appt.display.appointmentDate} at {appt.display.appointmentTime} with Dr. {appt.display.doctorName}</p>
-                    </div>
-                ))
+                <>
+                    <h2>Your Appointments</h2>
+                    {appointments.length === 0 ? (
+                        <p>No appointments found.</p>
+                    ) : (
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            {/* Radio buttons for appointment selection */}
+                            {appointments.map(appt => (
+                                <div key={appt.appointmentId}>
+                                    <label>
+                                        <input
+                                            type="radio"
+                                            value={appt.appointmentID}
+                                            {...register('appointment_id', { required: true })}
+                                        />
+                                        {appt.display.appointmentDate} at {appt.display.appointmentTime} with Dr. {appt.display.doctorName}
+                                    </label>
+                                </div>
+                            ))}
+                            {errors.appointment_id && <p style={{ color: 'red' }}>Please select an appointment.</p>}
+    
+                            <h1>Schedule New Appointment</h1>
+    
+                            <input
+                                type="hidden"
+                                {...register('patient_id', { required: true })}
+                                value={session.userId}
+                            />
+    
+                            <CustomDatePicker value={selectedDate} onChange={handleDateChange} />
+                            {errors.appointment_date && <span>Appointment Date Required</span>}
+    
+                            <select {...register('appointment_time', { required: true })}>
+                                {timeSlots.map((time, index) => (
+                                    <option key={index} value={time}>{time}</option>
+                                ))}
+                            </select>
+                            {errors.appointment_time && <span>Appointment Time Required</span>}
+    
+                            <input {...register('notes')} placeholder="Notes" />
+    
+                            <button type="submit">Submit</button>
+                        </form>
+                    )}
+                </>
             )}
-            
-            <h1>Schedule New Appointment</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input type="hidden" {...register('appointment_id', { required: true })} value={appointments[0]?.appointmentID} />
-                <input type="hidden" {...register('patient_id', { required: true })} value={session.userId} />
-                <CustomDatePicker value={selectedDate} onChange={handleDateChange} />
-                {errors.appointment_date && <span>Appointment Date Required</span>}
-                <select {...register('appointment_time', { required: true })}>
-                    {timeSlots.map((time, index) => (
-                        <option key={index} value={time}>{time}</option>
-                    ))}
-                </select>
-                {errors.appointment_time && <span>Appointment Time Required</span>}
-                <input {...register('notes', { required: false })} placeholder="Notes" />
-                {errors.notes && <span>Notes Required</span>}
-                <button type="submit">Submit</button>
-            </form>
         </div>
-    );
+    );    
 }
 
 export default PatientRescheduleForm;

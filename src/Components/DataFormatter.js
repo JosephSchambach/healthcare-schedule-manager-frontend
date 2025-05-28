@@ -34,12 +34,17 @@ export function formatAppointments( rawAppointments ) {
     });
 }
 
-export async function fetchAppointments( role, userId) {
+export async function fetchAppointments( role, userId, ignore_cancelled = true) {
     console.log("Fetching appointments for role:", role, "and userId:", userId);
+    let appointment_status = '!= cancelled';
+    if (!ignore_cancelled) {
+        appointment_status = '';
+    }
     const url = await getContext('url');
     const queryParams = new URLSearchParams({
         role: role,
-        userID: userId
+        userID: userId,
+        appointment_status: appointment_status
     }).toString();
     const response = await fetch(`${url}/appointment?${queryParams}`, {
         method: 'GET',
