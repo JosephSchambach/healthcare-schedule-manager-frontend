@@ -83,7 +83,6 @@ function PatientRescheduleForm() {
                         <p>No appointments found.</p>
                     ) : (
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            {/* Radio buttons for appointment selection */}
                             {appointments.map(appt => (
                                 <div key={appt.appointmentId}>
                                     <label>
