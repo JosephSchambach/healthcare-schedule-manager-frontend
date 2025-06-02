@@ -65,3 +65,25 @@ export async function fetchAppointments( role, userId, ignore_cancelled = true) 
     console.log("Formatted appointments:", formatted);
     return formatted;
 }
+
+export async function formatAppointmentTable(appointments) {
+    console.log("Type of ", typeof appointments, "appointments:", appointments);
+    if (!Array.isArray(appointments)) {
+        console.error("Expected appointments to be an array:", appointments);
+        return [];
+    }
+    console.log("Formatting appointment table with data:", appointments);
+    return appointments.map(appointment => {
+        const { appointmentID, patientID, doctorID, appointmentTypeID, appointmentStatusID, display } = appointment;
+        return {
+            appointment_id: appointmentID,
+            patient_id: patientID,
+            doctor_id: doctorID,
+            appointment_type_id: appointmentTypeID,
+            appointment_status_id: appointmentStatusID,
+            display: {
+                ...display
+            }
+        };
+    });
+}
