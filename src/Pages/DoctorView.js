@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { getContext } from "../utils.js";
 import { useSession } from "../Components/SessionContext.js";
 import { useNavigate } from "react-router-dom";
-import { fetchAppointments, formatAppointmentTable } from "../Components/DataFormatter.js";
+import { fetchAppointments } from "../Components/DataFormatter.js";
 
 function DoctorView() {
     const { register, handleSubmit, formState: { errors }} = useForm();
