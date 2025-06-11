@@ -63,37 +63,49 @@ function PatientScheduleForm() {
     };
 
     return (
-        <div>
-            <h1>Schedule Appointment</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="App">
+            <h1 className="h1">Schedule Appointment</h1>
+            <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
                 <input type="hidden" {...register('patient_id', { required: true })} value={session.userId} />
-                <select {...register('appointment_type', { required: true })}>
-                    {appointmentTypes.map((type) => (
-                        <option key={type.id} value={JSON.stringify(type)}>
-                            {type.name}
-                        </option>
-                    ))}
-                </select>
-                {errors.appointment_type && <span>Appointment Type Required</span>}
-                <select {...register('doctor', { required: true })}>
-                    {doctors.map((doctor) => (
-                        <option key={doctor.id} value={JSON.stringify(doctor)}>
-                            {doctor.name}
-                        </option>
-                    ))}
-                </select>
-                {errors.doctor && <span>Doctor Required</span>}
-                <CustomDatePicker value={selectedDate} onChange={handleDateChange} />
-                {errors.appointment_date && <span>Appointment Date Required</span>}
-                <select {...register('appointment_time', { required: true })}>
-                    {timeSlots.map((time, index) => (
-                        <option key={index} value={time}>{time}</option>
-                    ))}
-                </select>
-                {errors.appointment_time && <span>Appointment Time Required</span>}
-                <input {...register('notes', { required: false })} placeholder="Notes" />
-                {errors.notes && <span>Notes Required</span>}
-                <button type="submit">Submit</button>
+                <div className="form-group">
+                    <select {...register('appointment_type', { required: true })}>
+                        {appointmentTypes.map((type) => (
+                            <option key={type.id} value={JSON.stringify(type)}>
+                                {type.name}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.appointment_type && <span>Appointment Type Required</span>}
+                </div>
+                <div className="form-group">
+                    <select {...register('doctor', { required: true })}>
+                        {doctors.map((doctor) => (
+                            <option key={doctor.id} value={JSON.stringify(doctor)}>
+                                {doctor.name}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.doctor && <span>Doctor Required</span>}
+                </div>
+                <div className="form-group">
+                    <CustomDatePicker value={selectedDate} onChange={handleDateChange} />
+                    {errors.appointment_date && <span>Appointment Date Required</span>}
+                </div>
+                <div className="form-group">
+                    <select {...register('appointment_time', { required: true })}>
+                        {timeSlots.map((time, index) => (
+                            <option key={index} value={time}>{time}</option>
+                        ))}
+                    </select>
+                    {errors.appointment_time && <span>Appointment Time Required</span>}
+                </div>
+                <div className="form-group">
+                    <input {...register('notes', { required: false })} placeholder="Notes" />
+                    {errors.notes && <span>Notes Required</span>}
+                </div>
+                <div className="form-group">
+                    <button type="submit">Submit</button>
+                </div>
             </form>
         </div>
     )

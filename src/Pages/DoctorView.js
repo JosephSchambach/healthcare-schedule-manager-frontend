@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useSession } from "../Components/SessionContext.js";
 import { useNavigate } from "react-router-dom";
 import { fetchAppointments } from "../Components/DataFormatter.js";
+import "../App.css";
 
 function DoctorView() {
     const { register, handleSubmit, formState: { errors }} = useForm();
@@ -33,12 +34,12 @@ function DoctorView() {
 
     return (
         <div>
-            <h1>Doctor Appointment View</h1>
-            {loading && <p>Loading appointments...</p>}
-            {error && <p>Error: {error}</p>}
-            {!loading && appointments.length === 0 && <p>No appointments found.</p>}
+            <h1 className="h1">Doctor Appointment View</h1>
+            {loading && <p className="loading-text">Loading appointments...</p>}
+            {error && <p className="p">Error: {error}</p>}
+            {!loading && appointments.length === 0 && <p className="p">No appointments found.</p>}
             {!loading && appointments.length > 0 && (
-                <table>
+                <table className="table">
                     <thead>
                         <tr>
                             <th>Appointment ID</th>
@@ -67,7 +68,7 @@ function DoctorView() {
             )}
             <form onSubmit={handleSubmit(onSubmit)}>
                 <input type="hidden" {...register('doctor_id', { required: true })} value={session.userId} />
-                <button type="submit">Back to Home</button>
+                <button className="button" type="submit">Back to Home</button>
             </form>
         </div>
     )
