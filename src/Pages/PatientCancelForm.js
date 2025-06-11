@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { getContext } from "../utils.js";
 import { fetchAppointments } from "../Components/DataFormatter.js";
 import { useSession } from "../Components/SessionContext.js";
+import "../App.css";
 
 function PatientCancelForm() {
     const { session } = useSession();
@@ -53,28 +54,32 @@ function PatientCancelForm() {
     }
 
     return (
-        <div>
-            <h1>Cancel Appointment</h1>
+        <div className="App">
+            <h1 className="h1">Cancel Appointment</h1>
             <h2>Your Appointments</h2>
             {appointments.length === 0 ? (
-                <p>No appointments found.</p>
+                <p className="p">No appointments found.</p>
             ) : (
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    {appointments.map(appt => (
-                        <div key={appt.appointmentId}>
-                            <label>
-                                <input
-                                    type="radio"
-                                    value={appt.appointmentID}
-                                    {...register('appointment_id', { required: true })}
-                                />
-                                {appt.display.appointmentDate} at {appt.display.appointmentTime} with Dr. {appt.display.doctorName}
-                            </label>
-                        </div>
-                    ))}
-                    {errors.appointment_id && <span>Appointment Required</span>}
+                <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
+                    <div>
+                        {appointments.map(appt => (
+                            <div className="appointment-list" key={appt.appointmentId}>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        value={appt.appointmentID}
+                                        {...register('appointment_id', { required: true })}
+                                    />
+                                    {appt.display.appointmentDate} at {appt.display.appointmentTime} with Dr. {appt.display.doctorName}
+                                </label>
+                            </div>
+                        ))}
+                        {errors.appointment_id && <span>Appointment Required</span>}
+                    </div>
                     <input type="hidden" {...register('patient_id', { required: true })} value={session.userId} />
-                    <button type="submit">Cancel Appointment</button>
+                    <div className="form-group">
+                        <button type="submit">Cancel Appointment</button>
+                    </div>
                 </form>
             )}
         </div>
